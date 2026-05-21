@@ -15,13 +15,13 @@ float calcular_media(float notas[], int quantidade) {
 void logicaSituacao(float media) {
 
     if (media >= 7.0) {
-        printf("Situação: Aprovado\n");
+        printf("Situacao: Aprovado\n");
 
     } else if (media >= 5.0) {
-        printf("Situação: Recuperação\n");
+        printf("Situacao: Recuperacao\n");
 
     } else {
-        printf("Situação: Reprovado\n");
+        printf("Situacao: Reprovado\n");
     }
 }
 
@@ -40,74 +40,113 @@ void logicaDerivada() {
 
     float derivada = (b - a) / h;
 
-    printf("A derivada é: %.2f\n", derivada);
+    printf("Derivada aproximada: %.2f\n", derivada);
 }
 
 int main() {
 
     int opcao;
     int quantidade = 0;
-    float media = 0;
+
+    float notas[10];
+    float media = -1;
 
     do {
 
-        printf("\n================================================\n");
-        printf("=                 SISTEMA XYZ                  =\n");
-        printf("================================================\n");
+        printf("\n==============================\n");
+        printf(" SISTEMA EQUIPE XYZ\n");
+        printf("==============================\n");
 
-        printf("1 - Inserir Notas\n");
-        printf("2 - Calcular média\n");
-        printf("3 - Verificar situação\n");
-        printf("4 - Exibir Resultado\n");
+        printf("1 - Inserir notas\n");
+        printf("2 - Calcular media\n");
+        printf("3 - Verificar situacao\n");
+        printf("4 - Exibir resultado\n");
         printf("5 - Calcular derivada\n");
         printf("6 - Sair\n");
 
-        printf("Digite uma opção: ");
+        printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
-        if (opcao == 1) {
+        switch(opcao) {
 
-            printf("Opção 1 selecionada: Inserir Notas\n");
+            case 1:
+                printf("Quantas notas deseja inserir? ");
+                scanf("%d", &quantidade);
 
-        } else if (opcao == 2) {
+                if (quantidade > 10 || quantidade <= 0) {
 
-            printf("Digite a quantidade de notas: ");
-            scanf("%d", &quantidade);
+                    printf("Quantidade invalida.\n");
+                    quantidade = 0;
 
-            float notas[quantidade];
+                } else {
+                    for (int i = 0; i < quantidade; i++) {
 
-            for (int i = 0; i < quantidade; i++) {
+                        printf("Digite a nota %d: ", i + 1);
+                        scanf("%f", &notas[i]);
+                    }
 
-                printf("Digite a nota %d: ", i + 1);
-                scanf("%f", &notas[i]);
-            }
+                    printf("Notas inseridas com sucesso!\n");
+                }
 
-            media = calcular_media(notas, quantidade);
+                break;
 
-            printf("A média é: %.2f\n", media);
+            case 2:
+                if (quantidade > 0) {
 
-        } else if (opcao == 3) {
+                    media = calcular_media(notas, quantidade);
 
-            logicaSituacao(media);
+                    printf("Media calculada: %.2f\n", media);
 
-        } else if (opcao == 4) {
+                } else {
 
-            printf("O resultado é: %.2f de média.\n", media);
+                    printf("Insira as notas primeiro.\n");
+                }
 
-        } else if (opcao == 5) {
+                break;
 
-            logicaDerivada();
+            case 3:
+                if (media >= 0) {
 
-        } else if (opcao == 6) {
+                    logicaSituacao(media);
 
-            printf("Encerrando o programa...\n");
+                } else {
 
-        } else {
+                    printf("Calcule a media primeiro.\n");
+                }
 
-            printf("Opção inválida.\n");
+                break;
+
+            case 4:
+                if (media >= 0) {
+
+                    printf("Resultado final:\n");
+                    printf("Media: %.2f\n", media);
+
+                    logicaSituacao(media);
+
+                } else {
+
+                    printf("Nenhum resultado disponivel.\n");
+                }
+
+                break;
+
+            case 5:
+                logicaDerivada();
+
+                break;
+
+            case 6:
+                printf("Encerrando o sistema...\n");
+
+                break;
+
+            default:
+
+                printf("Opcao invalida. Tente novamente.\n");
         }
 
-    } while (opcao != 6);
+    } while(opcao != 6);
 
     return 0;
 }
